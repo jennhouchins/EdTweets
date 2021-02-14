@@ -105,6 +105,8 @@ ts_plot(ed_tweets, "hours") +
 
 Maybe the most retweeted tweet from NC on February 10th  will provide a clue...
 
+<center>
+
 ```{r}
 most_Retweets <- ed_tweets %>% 
   filter(tag == 'nced') %>% 
@@ -117,6 +119,8 @@ library(tweetrmd)
 
 tweetrmd::tweet_embed(tweet_url(most_Retweets$screenName, most_Retweets$id))
 ```
+
+</center>
 
 # 
 
@@ -152,7 +156,7 @@ tweet_word_totals <- left_join(tweet_word_counts, total_words)
 #tweet_word_totals
 ```
 
-```{r, out.width="80%"}
+```{r, out.width="75%"}
 # tweet_word_counts
 
 tweet_word_totals %>%
@@ -195,11 +199,11 @@ In particular, <span style="color: #a23;"><b>sb37</b></span> occurs quite freque
 
 # About this Project
 
-This project uses the Reveal.js presentation format of R Markdown. It also makes use of R packages such as twitteR, tweetrmd, tidyverse, and tidytext.
+<small>This project uses the Reveal.js presentation format of R Markdown. It also makes use of R packages such as twitteR, tweetrmd, tidyverse, and tidytext.</small>
 
-If you'd like to learn more about the techniques used in this
+<small>If you'd like to learn more about the techniques used in this
 presentation you can get the R project from my ECI 588 Text Mining
-Github repo:
+Github repo:</small>
 
 <https://github.com/jennhouchins/EdTweets.git>
 
