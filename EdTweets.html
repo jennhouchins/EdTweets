@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Jennifer Houchins" />
+  <title>“A Little Bird Told Me”</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="EdTweets_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="EdTweets_files/reveal.js-3.3.0.1/css/theme/blood.css" id="theme">
+
+<style type="text/css">
+.reveal section img {
+  background: rgba(255, 255, 255, 0.85);
+}
+</style>
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+    <script src="EdTweets_files/header-attrs-2.6/header-attrs.js"></script>
+    <script src="EdTweets_files/twitter-widget-0.0.1/widgets.js"></script>
+    <script src="EdTweets_files/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+    <link href="EdTweets_files/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+    <script src="EdTweets_files/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+    <script src="EdTweets_files/wordcloud2-0.0.1/hover.js"></script>
+    <script src="EdTweets_files/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">“A Little Bird Told Me”</h1>
+  <h1 class="subtitle"><small>Examining Tweets About Education</small></h1>
+    <h2 class="author"><span style="color: #a23000;">Jennifer Houchins</span></h2>
+    <h3 class="date">2/14/2021</h3>
+</section>
+
+<section class="slide level2">
+
+<p>For this week’s independent analysis assignment, I’m pulling tweets from Twitter following Jason Lee’s tutorial “Pulling Tweets into R” from</p>
+<p><a href="https://towardsdatascience.com/pulling-tweets-into-r-e17d4981cfe2" class="uri">https://towardsdatascience.com/pulling-tweets-into-r-e17d4981cfe2</a></p>
+<div class="figure" style="text-align: center">
+<img src="assets/pressure-1.png" alt="&lt;small&gt;This QR code will take you to the link above.&lt;/small&gt;" width="20%" />
+<p class="caption">
+<small>This QR code will take you to the link above.</small>
+</p>
+</div>
+<aside class="notes">
+<p>Here are secret notes that will not appear on the slide. They will appear when speaker view is activated!</p>
+</aside>
+</section>
+<section id="education-hashtags" class="title-slide slide level1">
+<h1>Education Hashtags</h1>
+<p>I would like to know what people have been tweeting about education most recently, particularly for our state, North Carolina. So, I focused my search on tweets that used the following hashtags:</p>
+<ol type="1">
+<li>#edchat (national level ed tweets)</li>
+<li>#nced (NC state level ed tweets)</li>
+</ol>
+</section>
+
+<section id="how-many-tweets" class="title-slide slide level1">
+<h1>How many tweets?</h1>
+<p>Searching Twitter resulted in <span style="color: #a23;"><b>6,912 tweets</b></span> that used the hashtags of #edchat or #nced.</p>
+<p>I asked for 5000 tweets for each hashtag as a search term, but interestingly, <span style="color: #a23;"><b>#nced</b></span> only returned <span style="color: #a23;"><b>1,912 </b></span> of the results.</p>
+</section>
+
+<section id="section" class="title-slide slide level1">
+<h1></h1>
+<p>Because pulling tweets can take some time, I pulled the data and saved it to a csv that I’ve used to read selected columns in here.</p>
+<p>Here’s a glimpse:</p>
+<pre><code>## Rows: 6,912
+## Columns: 8
+## $ text          &lt;chr&gt; &quot;RT @sdelafosse: Join me and thousands of educators fro…
+## $ favoriteCount &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ created       &lt;dttm&gt; 2021-02-13 17:11:33, 2021-02-13 17:11:27, 2021-02-13 1…
+## $ retweetCount  &lt;dbl&gt; 1, 1, 0, 2, 2, 0, 1, 0, 2, 0, 132, 4, 1, 0, 1, 0, 132, …
+## $ isRetweet     &lt;lgl&gt; TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE…
+## $ tag           &lt;chr&gt; &quot;edchat&quot;, &quot;edchat&quot;, &quot;edchat&quot;, &quot;edchat&quot;, &quot;edchat&quot;, &quot;edch…
+## $ screenName    &lt;chr&gt; &quot;MariaAngelesSua&quot;, &quot;loribrasel5&quot;, &quot;Wybo_in_Regina&quot;, &quot;mo…
+## $ id            &lt;dbl&gt; 1.360638e+18, 1.360638e+18, 1.360638e+18, 1.360637e+18,…</code></pre>
+</section>
+
+<section id="tweet-frequency" class="title-slide slide level1">
+<h1>Tweet Frequency?</h1>
+<p><small>Here is the frequency of education tweets since February 5th. The grey dashed line shows where the new week begins on Monday and the red dashed line occurring at noon on February 10th shows where a flurry of tweeting began.</small></p>
+<p><img src="EdTweets_files/figure-revealjs/unnamed-chunk-4-1.png" width="60%" /></p>
+</section>
+
+<section id="so-what-happened" class="title-slide slide level1">
+<h1>So what happened?</h1>
+<p>Maybe the most retweeted tweet from NC on February 10th will provide a clue…</p>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">Starting Feb. 24, Mandy Cohen says anyone who must work in-person in a North Carolina childcare or PreK-12 facility will be eligible to get COVID vaccine. This include school districts, charter schools, private schools, PreK centers, Head Start. <a href="https://twitter.com/hashtag/nced?src=hash&amp;ref_src=twsrc%5Etfw">#nced</a> <a href="https://twitter.com/hashtag/ncpol?src=hash&amp;ref_src=twsrc%5Etfw">#ncpol</a> <a href="https://twitter.com/hashtag/coronavirus?src=hash&amp;ref_src=twsrc%5Etfw">#coronavirus</a></p>&mdash; Keung Hui (@nckhui) <a href="https://twitter.com/nckhui/status/1359580418694127621?ref_src=twsrc%5Etfw">February 10, 2021</a></blockquote>
+
+</section>
+
+<section id="section-1" class="title-slide slide level1">
+<h1></h1>
+<p><small> After filtering out retweets so the results would not be skewed, the most frequently used words in the education tweets are shown here. The results were filtered by words used more than 50 times. </small></p>
+<p><small>Notice that the #edchat tweets seem to suggest discussions around edtech and education in general, but the #nced tweets suggest discussions that reflect state politics that affect education.</small></p>
+<p><img src="EdTweets_files/figure-revealjs/unnamed-chunk-8-1.png" width="80%" /></p>
+</section>
+
+<section id="section-2" class="title-slide slide level1">
+<h1></h1>
+<p>For a closer look at NC, this word cloud shows the top 75 most frequently used words in tweets that used the #nced hashtag.</p>
+<center>
+<div id="htmlwidget-f1b3d8f30392aae907b7" style="width:480px;height:384px;" class="wordcloud2 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f1b3d8f30392aae907b7">{"x":{"word":["ncpol","school","nc","schools","ncga","sb37","amp","bill","students","person","teachers","house","senate","education","children","north","covid","county","week","districts","learning","nc_governor","12","carolina","support","unc","37","plan","educators","wake","join","time","wcpss","reopening","vaccine","3","cooper","openschoolsnow","require","vote","coronavirus","gov","reopen","teacher","workers","return","public","system","feb","instruction","parents","rep","staff","19","amendment","deannaballardnc","eligible","5","charter","jay_chaudhuri","meeting","ncbold","ncties2021","roy","rules","sb","social","ucators","amdt","bradford","data","it’s","john","leaders","nc’s","offer","people","share","sign"],"freq":[99,95,84,82,64,64,62,56,52,49,47,46,45,44,36,35,33,31,31,29,29,28,27,26,25,25,24,23,22,22,21,21,21,20,20,19,19,19,19,19,18,17,17,16,16,15,14,14,13,13,13,13,13,12,12,12,12,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,10],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":1.81818181818182,"backgroundColor":"white","gridSize":0,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+</center>
+</section>
+
+<section id="reflecting" class="title-slide slide level1">
+<h1>Reflecting</h1>
+<p>The analysis of education tweets suggest that recently the focus on education here in our state is on the pandemic and state politics.</p>
+<p>In particular, <span style="color: #a23;"><b>sb37</b></span> occurs quite frequently in the #nced tweets and refers to <span style="color: #a23;"><b>NC Senate Bill 37</b></span> entitled <span style="color: #a23;"><b>“In-Person Learning Choice for Families.”</b></span></p>
+</section>
+
+<section id="about-this-project" class="title-slide slide level1">
+<h1>About this Project</h1>
+<p>This project uses the Reveal.js presentation format of R Markdown. It also makes use of R packages such as twitteR, tweetrmd, tidyverse, and tidytext.</p>
+<p>If you’d like to learn more about the techniques used in this presentation you can get the R project from my ECI 588 Text Mining Github repo:</p>
+<p><a href="https://github.com/jennhouchins/EdTweets.git" class="uri">https://github.com/jennhouchins/EdTweets.git</a></p>
+<div class="figure" style="text-align: center">
+<img src="assets/qrcode_github.png" alt="&lt;small&gt;This QR code will take you to the link above.&lt;/small&gt;" width="20%" />
+<p class="caption">
+<small>This QR code will take you to the link above.</small>
+</p>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script src="EdTweets_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="EdTweets_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+        // Push each slide change to the browser history
+        history: true,
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'EdTweets_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'EdTweets_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

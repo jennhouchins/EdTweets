@@ -1,0 +1,208 @@
+---
+title: '"A Little Bird Told Me"'
+subtitle: "<small>Examining Tweets About Education</small>"
+author: "<span style='color: #a23000;'>Jennifer Houchins</span>"
+date: "2/14/2021"
+output:
+  revealjs::revealjs_presentation:
+    self_contained: false
+    theme: blood
+    highlight: monochrome
+    center: true
+    transition: default
+    reveal_plugins: ["notes", "zoom"]
+    reveal_options:
+      controlsTutorial: true
+      keyboard: true
+      slideNumber: 'c/t'
+      chalkboard:
+        theme: chalkboard
+        toggleNotesButton: false
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+--- 
+
+```{r, echo=FALSE}
+# then load all the relevant packages
+pacman::p_load(pacman, tidyverse, tidytext, wordcloud2, 
+               forcats, remotes, ggplot2, rtweet)
+```
+
+For this week's independent analysis assignment, I'm pulling tweets from
+Twitter following Jason Lee's tutorial "Pulling Tweets into R" from
+
+<https://towardsdatascience.com/pulling-tweets-into-r-e17d4981cfe2>
+
+```{r, out.width='20%', fig.align='center', fig.cap='<small>This QR code will take you to the link above.</small>'}
+knitr::include_graphics('assets/pressure-1.png')
+```
+
+::: {.notes}
+Here are secret notes that will not appear on the slide. They will
+appear when speaker view is activated!
+:::
+
+# Education Hashtags
+
+I would like to know what people have been tweeting about education most
+recently, particularly for our state, North Carolina. So, I focused my search on tweets that used the following hashtags:
+
+1.  \#edchat (national level ed tweets)
+2.  \#nced (NC state level ed tweets)
+
+# How many tweets?
+
+Searching Twitter resulted in <span style="color: #a23;"><b>6,912 tweets</b></span> that used the
+hashtags of \#edchat or \#nced.
+
+I asked for 5000 tweets for each hashtag as a search
+term, but interestingly, <span style="color: #a23;"><b>\#nced</b></span> only returned <span style="color: #a23;"><b>1,912 </b></span> of
+the results.
+
+# 
+
+```{r import-data, cache=TRUE, include=FALSE}
+datafilePath <- "data/education_tweets.csv"
+ed_tweets <- read_csv(datafilePath) %>%
+  select(text, favoriteCount, created, retweetCount, isRetweet, tag, screenName, id) %>% 
+ filter(tag != "onlinelearning")
+```
+
+Because pulling tweets can take some time, I pulled the data and saved
+it to a csv that I've used to read selected columns in here.
+
+Here's a glimpse:
+
+```{r}
+glimpse(ed_tweets)
+```
+
+# Tweet Frequency?
+
+<small>Here is the frequency of education tweets since February 5th. The grey
+dashed line shows where the new week begins on Monday and the red dashed line occurring at noon on February 10th shows where a flurry of tweeting began.</small>
+
+```{r, out.width="60%"}
+ts_plot(ed_tweets, "hours") +
+  labs(x = NULL, y = NULL,
+       title = "Tweet Frequency",
+       subtitle = paste0(format(min(ed_tweets$created), "%B %d, %Y"), " to ", format(max(ed_tweets$created),"%B %d, %Y")),
+       caption = "\nData collected from Twitter's REST API via twitteR") +
+  theme_classic() + 
+  theme(plot.title = element_text(NULL, NULL, color = "#a23000", size = 18, face = "bold")) + 
+  geom_vline(xintercept = as.POSIXct("2021-02-07 24:00:00", tz = "UTC"), linetype = 2, color = "grey") +
+  geom_vline(xintercept = as.POSIXct("2021-02-10 12:00:00", tz = "UTC"), linetype = 2, color = "#a23000")
+```
+
+# So what happened?
+
+Maybe the most retweeted tweet from NC on February 10th  will provide a clue...
+
+```{r}
+most_Retweets <- ed_tweets %>% 
+  filter(tag == 'nced') %>% 
+  arrange(-retweetCount) %>%
+  slice(1) %>% 
+  select(created, screenName, text, retweetCount, id)
+#glimpse(most_Retweets)
+
+library(tweetrmd)
+
+tweetrmd::tweet_embed(tweet_url(most_Retweets$screenName, most_Retweets$id))
+```
+
+# 
+
+<small> After filtering out retweets so the results would not be skewed, the most frequently used words in the education tweets are shown here. The results were filtered by words used more than 50 times. </small>
+
+<small>Notice that the #edchat tweets seem to suggest discussions around edtech and education in general, but the #nced tweets suggest discussions that reflect state politics that affect education.</small>
+```{r, include=FALSE}
+tokenizable_tweets <- ed_tweets %>%
+  filter(isRetweet == "FALSE") %>%
+  select(text, tag)
+
+tidy_tweets <- unnest_tokens(tokenizable_tweets, word, text)
+ed_tweets_clean <- anti_join(tidy_tweets, stop_words)
+
+custom_stop <- data.frame("word" = c("t.co", "https", "edchat", "nced", "onlinelearning"))
+
+ed_tweets_clean_notags <- anti_join(ed_tweets_clean, custom_stop)
+
+```
+
+```{r, include=FALSE}
+tweet_word_counts <- ed_tweets_clean_notags %>%
+  count(tag, word, sort = TRUE) %>%
+  group_by(tag) %>%
+  mutate(proportion = n / sum(n))
+
+total_words <- tweet_word_counts %>%
+  group_by(tag) %>%
+  summarise(total = sum(n))
+
+tweet_word_totals <- left_join(tweet_word_counts, total_words)
+
+#tweet_word_totals
+```
+
+```{r, out.width="80%"}
+# tweet_word_counts
+
+tweet_word_totals %>%
+  filter(n > 50) %>% # keep rows with word counts greater than 100
+  group_by(tag) %>% 
+  slice_max(proportion, n=5) %>% 
+  ungroup() %>% 
+  mutate(tag = as.factor(tag), word = reorder_within(word, proportion, tag)) %>% #reorder the word variable by n and replace with new variable called word
+  ggplot(aes(word, proportion, fill=tag)) + # create a plot with n on x axis and word on y axis
+  geom_col(show.legend = FALSE) + # make it a bar plot
+  facet_wrap(~tag, ncol = 3, scales = "free") +
+  coord_flip() +
+  scale_x_reordered() 
+```
+
+# 
+
+For a closer look at NC, this word cloud shows the top 75 most frequently used words in tweets that used the \#nced hashtag.
+
+<center>
+
+```{r, include=FALSE}
+word_counts <- ed_tweets_clean_notags %>% 
+  filter(tag == 'nced') %>% 
+  count(word, sort = TRUE) %>% 
+  top_n(75)
+```
+
+```{r fig.height=4, fig.width=5}
+wordcloud2(word_counts, shape='circle')
+```
+
+</center>
+
+# Reflecting
+
+The analysis of education tweets suggest that recently the focus on education here in our state is on the pandemic and state politics. 
+
+In particular, <span style="color: #a23;"><b>sb37</b></span> occurs quite frequently in the #nced tweets and refers to <span style="color: #a23;"><b>NC Senate Bill 37</b></span> entitled <span style="color: #a23;"><b>"In-Person Learning Choice for Families."</b></span>
+
+# About this Project
+
+This project uses the Reveal.js presentation format of R Markdown. It also makes use of R packages such as twitteR, tweetrmd, tidyverse, and tidytext.
+
+If you'd like to learn more about the techniques used in this
+presentation you can get the R project from my ECI 588 Text Mining
+Github repo:
+
+<https://github.com/jennhouchins/EdTweets.git>
+
+```{r, out.width='20%', fig.align='center', fig.cap='<small>This QR code will take you to the link above.</small>'}
+knitr::include_graphics('assets/qrcode_github.png')
+```
