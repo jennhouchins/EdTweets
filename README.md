@@ -1,2 +1,0 @@
-# EdTweets
-## Author: Jennifer Houchins
