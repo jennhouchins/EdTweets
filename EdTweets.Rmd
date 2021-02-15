@@ -196,9 +196,10 @@ markdown_widget <- function(widget,path=getwd(),filename="file.png"){
 }
 ```
 
-```{r, results="asis", out.height="75%"}
-widget <- wordcloud2(word_counts, shape='circle')
-markdown_widget(widget, path = ".", filename = "wordcloud.png")
+```{r, fig.height=5, fig.width=7}
+# widget <- wordcloud2(word_counts, shape='circle')
+# markdown_widget(widget, path = ".", filename = "wordcloud.png")
+wordcloud2(word_counts, shape='circle')
 ```
 
 </center>
