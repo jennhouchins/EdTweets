@@ -32,7 +32,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```{r, echo=FALSE}
 # then load all the relevant packages
 pacman::p_load(pacman, tidyverse, tidytext, wordcloud2, 
-               forcats, remotes, ggplot2, rtweet)
+               forcats, remotes, ggplot2, rtweet, htmlwidgets, webshot)
 ```
 
 For this week's independent analysis assignment, I'm pulling tweets from
@@ -184,9 +184,21 @@ word_counts <- ed_tweets_clean_notags %>%
   count(word, sort = TRUE) %>% 
   top_n(75)
 ```
+```{r definition, echo=FALSE}
+markdown_widget <- function(widget,path=getwd(),filename="file.png"){
+  require(htmlwidgets)
+  require(webshot)
+  saveWidget(widget,"tmp.html",selfcontained = F)
+  file <- paste(path,filename,sep = "/")
+  webshot("tmp.html",file,delay = 5,vwidth = 800,vheight = 480)
+  file.remove("tmp.html")
+  paste0("![",file,"](",file,")\n\n") %>% cat()
+}
+```
 
-```{r fig.height=4, fig.width=5}
-wordcloud2(word_counts, shape='circle')
+```{r, results="asis", out.height="75%"}
+widget <- wordcloud2(word_counts, shape='circle')
+markdown_widget(widget, path = ".", filename = "wordcloud.png")
 ```
 
 </center>
